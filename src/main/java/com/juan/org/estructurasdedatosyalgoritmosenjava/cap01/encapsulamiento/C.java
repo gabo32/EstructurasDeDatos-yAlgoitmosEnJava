@@ -6,7 +6,7 @@
 package com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.encapsulamiento;
 
 /**
- * Clase para ejemplificar el empapsulamiento de objetos
+ * Clase para ejemplificar el encapsulamiento de objetos
  * @author JuanVaio
  */
 public class C {
