@@ -143,7 +143,7 @@ public class EntradaSalida {
         fOut.writeObject(c1);
         fOut.writeObject(c2);
         fOut.close();
-    }
+    }  
     
     void readObjects(String fInName)throws IOException{
         C c1 = new C(10, 'a'), c2= c1;
