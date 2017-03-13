@@ -5,9 +5,6 @@
  */
 package com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.entradasalida;
 
-import com.sun.corba.se.impl.io.IIOPInputStream;
-import com.sun.corba.se.impl.io.IIOPOutputStream;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -18,7 +15,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
