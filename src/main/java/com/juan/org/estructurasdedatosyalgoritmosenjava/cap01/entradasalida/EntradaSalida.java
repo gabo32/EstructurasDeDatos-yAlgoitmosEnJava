@@ -155,6 +155,6 @@ public class EntradaSalida {
             
         }
         System.out.println(c1 +" "+c2);
-    }
+    }   
     
 }
