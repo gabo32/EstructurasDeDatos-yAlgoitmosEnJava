@@ -5,6 +5,8 @@
  */
 package com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.entradasalida;
 
+import com.sun.corba.se.impl.io.IIOPInputStream;
+import com.sun.corba.se.impl.io.IIOPOutputStream;
 import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -17,6 +19,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.util.StringTokenizer;
@@ -131,6 +135,26 @@ public class EntradaSalida {
                 fIn.readLong()+" "+
                 fIn.readByte()+" "+
                 fIn.readUTF());
+    }
+    
+    void writeObjects(String fOutName)throws IOException{
+        C c1 = new C(10, 'C'), c2 = new C(20, 'b');
+        ObjectOutputStream fOut = new ObjectOutputStream(new FileOutputStream(fOutName));
+        fOut.writeObject(c1);
+        fOut.writeObject(c2);
+        fOut.close();
+    }
+    
+    void readObjects(String fInName)throws IOException{
+        C c1 = new C(10, 'a'), c2= c1;
+        ObjectInputStream fIn = new ObjectInputStream(new FileInputStream(fInName));
+        try{
+            c1 = (C)fIn.readObject();
+            c2 = (C)fIn.readObject();
+        }catch(ClassNotFoundException e){
+            
+        }
+        System.out.println(c1 +" "+c2);
     }
     
 }
