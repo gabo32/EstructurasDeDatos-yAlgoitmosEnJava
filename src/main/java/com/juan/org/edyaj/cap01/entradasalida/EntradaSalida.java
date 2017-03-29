@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.io.StreamTokenizer;
 import java.util.StringTokenizer;
 
@@ -44,7 +45,7 @@ public class EntradaSalida {
         return s;
     }
     
-    void readBytes1(String fInName, String fOutName) throws IOException{
+    public void readBytes1(String fInName, String fOutName) throws IOException{
         FileInputStream fIn = new FileInputStream(fInName);
         FileOutputStream fOut = new FileOutputStream(fOutName);
         int i;
@@ -55,7 +56,7 @@ public class EntradaSalida {
         fOut.close();
     }
     
-    void readBytes2(String fInName, String fOutName)throws IOException{
+    public void readBytes2(String fInName, String fOutName)throws IOException{
         BufferedInputStream fIn = new BufferedInputStream(new FileInputStream(fInName));
         BufferedOutputStream fOut = new BufferedOutputStream(new FileOutputStream(fOutName));
         
@@ -68,7 +69,7 @@ public class EntradaSalida {
         fOut.close();
     }
     
-    void readLines(String fInName,String fOutName)throws IOException{
+    public void readLines(String fInName,String fOutName)throws IOException{
         BufferedReader fIn = new BufferedReader(new FileReader(fInName));
         PrintWriter fOut = new PrintWriter(new FileWriter(fOutName));
         String s;
@@ -80,7 +81,7 @@ public class EntradaSalida {
         fOut.close();
     }
     
-    void readTokens(String fInName)throws IOException{
+    public void readTokens(String fInName)throws IOException{
         StreamTokenizer fIn = new StreamTokenizer(new BufferedReader(new FileReader(fInName)));
         fIn.nextToken();
         String s;
@@ -95,7 +96,7 @@ public class EntradaSalida {
         }
     }
     
-    void readTokens2(String fInName)throws IOException{
+    public void readTokens2(String fInName)throws IOException{
         BufferedReader fIn = new BufferedReader(new FileReader(fInName));
         String s;
         while((s = fIn.readLine())!= null){
@@ -107,7 +108,7 @@ public class EntradaSalida {
         fIn.close();
     }
     
-    void writePrimitives(String fOutName)throws IOException{
+    public void writePrimitives(String fOutName)throws IOException{
         DataOutputStream fOut = new DataOutputStream(new FileOutputStream(fOutName));
         fOut.writeBoolean(5<6);
         fOut.writeChar('A');
@@ -120,7 +121,7 @@ public class EntradaSalida {
         fOut.close();
     }
     
-    void readPrimitives(String fInName)throws IOException{
+    public void readPrimitives(String fInName)throws IOException{
         DataInputStream fIn = new DataInputStream(new FileInputStream(fInName));
         System.out.println(fIn.readBoolean()+" "+
                 fIn.readChar()+" "+
@@ -133,7 +134,7 @@ public class EntradaSalida {
                 fIn.readUTF());
     }
     
-    void writeObjects(String fOutName)throws IOException{
+    public void writeObjects(String fOutName)throws IOException{
         C c1 = new C(10, 'C'), c2 = new C(20, 'b');
         ObjectOutputStream fOut = new ObjectOutputStream(new FileOutputStream(fOutName));
         fOut.writeObject(c1);
@@ -141,7 +142,7 @@ public class EntradaSalida {
         fOut.close();
     }  
     
-    void readObjects(String fInName)throws IOException{
+    public void readObjects(String fInName)throws IOException{
         C c1 = new C(10, 'a'), c2= c1;
         ObjectInputStream fIn = new ObjectInputStream(new FileInputStream(fInName));
         try{
@@ -152,5 +153,19 @@ public class EntradaSalida {
         }
         System.out.println(c1 +" "+c2);
     }   
+    
+    public void writeString(String s,RandomAccessFile out)throws IOException{
+        for (int i = 0; i < s.length(); i++) {
+            out.writeChar(s.charAt(i));
+        }
+    }
+    
+    public String readString(int len,RandomAccessFile in)throws IOException{
+        StringBuilder s = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            s.append(in.readChar());
+        }
+        return s.toString();
+    }
     
 }
