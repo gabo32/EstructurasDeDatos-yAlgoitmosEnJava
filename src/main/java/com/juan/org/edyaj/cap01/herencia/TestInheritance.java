@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.herencia;
+package com.juan.org.edyaj.cap01.herencia;
 
-import com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.herencia.basepackage.BaseClass;
+import com.juan.org.edyaj.cap01.herencia.basepackage.BaseClass;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.entradasalida;
+package com.juan.org.edyaj.cap01.entradasalida;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

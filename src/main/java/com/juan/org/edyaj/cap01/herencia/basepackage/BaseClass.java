@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.herencia.basepackage;
+package com.juan.org.edyaj.cap01.herencia.basepackage;
 
 /**
  *

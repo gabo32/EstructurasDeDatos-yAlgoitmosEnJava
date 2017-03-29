@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.juan.org.estructurasdedatosyalgoritmosenjava.cap01.encapsulamiento;
+package com.juan.org.edyaj.cap01.encapsulamiento;
 
 /**
  * Clase para ejemplificar el encapsulamiento de objetos
