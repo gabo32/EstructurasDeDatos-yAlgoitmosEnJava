@@ -1,10 +1,9 @@
 package com.juan.org.edyaj.cap01.casoestudio.aleatorio;
 
 
-import com.juan.org.edyaj.cap01.casoestudio.aleatorio.DbObject;
-import com.juan.org.edyaj.cap01.entradasalida.EntradaSalida;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,16 +18,15 @@ public class Database {
 
     private RandomAccessFile database;
     private String fName = new String();
-    private EntradaSalida io = new EntradaSalida();
+    private Scanner kb = new Scanner(System.in);
 
-    Database() throws IOException {
-        System.out.println("File name");
-        fName = io.readLine();
+    Database(){
     }
 
     private void add(DbObject d) throws IOException {
         database = new RandomAccessFile(fName, "rw");
         database.seek(database.length());
+        d.writeToFile(database);
         database.close();
     }
 
@@ -77,9 +75,11 @@ public class Database {
 
     public void run(DbObject rec) throws IOException {
         String option;
+        System.out.print("File name: ");
+        fName = kb.next();
         System.out.println("1. Añadir. 2 buscar. 3 modificar un registro. 4 salir");
         System.out.println("Introduzca una opcion");
-        option = io.readLine();
+        option = kb.next();
         while (true) {
             if (option.charAt(0) == '1') {
                 rec.readFromConsole();
@@ -102,7 +102,7 @@ public class Database {
             
             printDB(rec);
             System.out.println("Introducza una opcion");
-            option = io.readLine();
+            option = kb.next();
         }
     }
 

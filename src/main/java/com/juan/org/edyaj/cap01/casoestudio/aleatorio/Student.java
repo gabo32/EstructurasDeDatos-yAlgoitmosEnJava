@@ -21,7 +21,7 @@ public class Student extends Personal{
         super();
     }
     
-    Student(String ssn,String n,String c,int y,long s, String m){
+    Student(int ssn,String n,String c,int y,long s, String m){
         super(ssn, n, c, y, s);
         major = m;
     }
@@ -47,7 +47,7 @@ public class Student extends Personal{
     public void readFromConsole()throws IOException{
         super.readFromConsole();
         System.out.print("Introduzca una asignatura principal: ");
-        major= readLine();
+        major= kb.next();
         for (int i = major.length(); i < majorLen; i++) {
             major += " ";
         }

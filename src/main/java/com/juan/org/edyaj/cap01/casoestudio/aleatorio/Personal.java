@@ -3,6 +3,7 @@ package com.juan.org.edyaj.cap01.casoestudio.aleatorio;
 import com.juan.org.edyaj.cap01.entradasalida.EntradaSalida;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,14 +17,16 @@ import java.io.RandomAccessFile;
  */
 public class Personal extends EntradaSalida implements DbObject{
     protected final int nameLen = 10, cityLen = 10;
-    protected String SSN, name, city;
-    protected int year;
+    protected String  name, city;
+    protected int SSN,year;
     protected long salary;
-    protected final int size = 9*2 + nameLen*2 +cityLen*2+4+8;
+    protected final int size = 4 + nameLen*2 +cityLen*2+4+8;
+    
+    Scanner kb = new java.util.Scanner(System.in);
     
     Personal(){}
     
-    Personal(String ssn,String n, String c, int y, long s){
+    Personal(int ssn,String n, String c, int y, long s){
         this.SSN = ssn;
         this.name = n;
         this.city =c;
@@ -33,7 +36,7 @@ public class Personal extends EntradaSalida implements DbObject{
 
     @Override
     public void writeToFile(RandomAccessFile out) throws IOException {
-        writeString(SSN,out);
+        out.writeInt(SSN);
         writeString(name,out);
         writeString(city,out);
         out.writeInt(year);
@@ -42,7 +45,7 @@ public class Personal extends EntradaSalida implements DbObject{
 
     @Override
     public void readFromFile(RandomAccessFile in) throws IOException {
-        SSN = readString (9,in);
+        SSN = in.readInt();
         name = readString (nameLen,in);
         city = readString (cityLen,in);
         year = in.readInt();
@@ -53,21 +56,21 @@ public class Personal extends EntradaSalida implements DbObject{
     @Override
     public void readFromConsole() throws IOException {
         System.out.print("Enter SSN: ");
-        SSN = readLine();
+        SSN = kb.nextInt();
         System.out.print("Name: ");
-        name = readLine();
+        name = kb.next();
         for (int i = name.length(); i < nameLen; i++) {
             name += " ";
         }
         System.out.print("City: ");
-        city = readLine();
+        city = kb.next();
         for (int i = city.length(); i < cityLen; i++) {
             city += " ";
         }
         System.out.println("Birthyear: ");
-        year = Integer.valueOf(readLine().trim()).intValue();
+        year = kb.nextInt();
         System.out.print("Salary: ");
-        salary = Long.valueOf(readLine().trim()).intValue();
+        salary = kb.nextLong();
     }
 
     @Override
@@ -78,7 +81,7 @@ public class Personal extends EntradaSalida implements DbObject{
     @Override
     public void readKey() throws IOException {
         System.out.println("Enter SSN: ");
-        SSN = readLine();
+        SSN = kb.nextInt();
     }
 
     @Override
@@ -95,7 +98,7 @@ public class Personal extends EntradaSalida implements DbObject{
     
     @Override
     public boolean equals(Object pr){
-        return SSN.equals(((Personal)pr).SSN);
+        return SSN==(((Personal)pr).SSN);
     }
     
 }
