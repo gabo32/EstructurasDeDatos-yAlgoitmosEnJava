@@ -1,6 +1,6 @@
 package com.juan.org.edyaj.cap01.casoestudio.aleatorio;
 
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
@@ -20,14 +20,65 @@ public class Database {
     private String fName = new String();
     private Scanner kb = new Scanner(System.in);
 
-    Database(){
+    Database() {
     }
 
     private void add(DbObject d) throws IOException {
+        long posicionGuardar = getPosicion(d);
+//        moverDespuesDe(posicionGuardar, d);
+        System.out.println("pos " + (posicionGuardar / d.size()));
+//        database = new RandomAccessFile(fName, "rw");
+//        database.seek(database.length());
+//        d.writeToFile(database);
+//        database.close();
+    }
+
+    private long getPosicion(DbObject d) throws FileNotFoundException, IOException {
+        long pos = 0;
+        DbObject[] tmp = new DbObject[1];
+        d.copy(tmp);
         database = new RandomAccessFile(fName, "rw");
-        database.seek(database.length());
-        d.writeToFile(database);
+        while (database.getFilePointer() < database.length()) {
+            tmp[0].readFromFile(database);
+            if (d.compareTo(tmp[0]) < 0) {
+                database.close();
+                return pos;
+            } else {
+                pos = database.getFilePointer();
+            }
+        }
+
+        pos = database.length();
         database.close();
+        return pos;
+
+    }
+
+    private void moverDespuesDe(long pos, DbObject d) throws FileNotFoundException, IOException {
+        database = new RandomAccessFile(fName, "rw");
+
+        if (pos == (database.length())) {
+            System.out.println("tet");
+            return;
+        }
+
+        long posEscribirNuevo = database.length() - d.size();
+        DbObject[] tmp = new DbObject[1];
+        d.copy(tmp);
+        while (posEscribirNuevo > pos) {
+            System.out.println("copu");
+            database.seek(posEscribirNuevo);
+            tmp[0].readFromFile(database);
+//            tmp[0].writeLegibly();
+            tmp[0].writeToFile(database);
+            posEscribirNuevo = database.getFilePointer() - 3 * (d.size());
+        }
+
+        tmp[0].readFromFile(database);
+        tmp[0].writeToFile(database);
+
+        database.close();
+
     }
 
     private void modify(DbObject d) throws IOException {
@@ -59,6 +110,7 @@ public class Database {
                 return true;
             }
         }
+
         database.close();
         return false;
     }
@@ -66,6 +118,7 @@ public class Database {
     private void printDB(DbObject d) throws IOException {
         database = new RandomAccessFile(fName, "r");
         while (database.getFilePointer() < database.length()) {
+            System.out.print("pos: "+(database.getFilePointer()/d.size()));
             d.readFromFile(database);
             d.writeLegibly();
             System.out.println();
@@ -91,15 +144,15 @@ public class Database {
                     System.out.println("no ");
                 }
                 System.out.println("En la base de datos");
-            }else if(option.charAt(0)=='3'){
+            } else if (option.charAt(0) == '3') {
                 rec.readKey();
                 modify(rec);
-            }else if(option.charAt(0)!='4'){
+            } else if (option.charAt(0) != '4') {
                 System.out.println("Opcion incorrecta");
-            }else{
+            } else {
                 return;
             }
-            
+
             printDB(rec);
             System.out.println("Introducza una opcion");
             option = kb.next();

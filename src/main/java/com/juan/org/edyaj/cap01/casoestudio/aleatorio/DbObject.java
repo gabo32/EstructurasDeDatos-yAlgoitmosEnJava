@@ -19,5 +19,6 @@ public interface DbObject {
     public void writeLegibly()throws IOException;
     public void readKey()throws IOException;
     public void copy(DbObject[] db);
+    public int compareTo(Object d);
     public int size();
 }

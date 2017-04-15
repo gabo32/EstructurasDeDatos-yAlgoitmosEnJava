@@ -62,11 +62,13 @@ public class Personal extends EntradaSalida implements DbObject{
         for (int i = name.length(); i < nameLen; i++) {
             name += " ";
         }
+        name = name.substring(0, nameLen);
         System.out.print("City: ");
         city = kb.next();
         for (int i = city.length(); i < cityLen; i++) {
             city += " ";
         }
+        city = city.substring(0, cityLen);
         System.out.println("Birthyear: ");
         year = kb.nextInt();
         System.out.print("Salary: ");
@@ -94,11 +96,15 @@ public class Personal extends EntradaSalida implements DbObject{
         return size;
     }
     
-    
-    
     @Override
     public boolean equals(Object pr){
         return SSN==(((Personal)pr).SSN);
+    }
+    
+    @Override
+    public int compareTo(Object pr){
+        System.out.println("comparando "+SSN+" con "+((Personal)pr).SSN+" bres "+Integer.compare(SSN, (((Personal)pr).SSN)));
+        return Integer.compare(SSN, (((Personal)pr).SSN));
     }
     
 }
