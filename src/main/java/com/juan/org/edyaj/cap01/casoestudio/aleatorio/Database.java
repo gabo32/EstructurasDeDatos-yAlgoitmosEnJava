@@ -1,84 +1,21 @@
 package com.juan.org.edyaj.cap01.casoestudio.aleatorio;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Scanner;
+import java.io.*;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author JuanVaio
- */
 public class Database {
 
     private RandomAccessFile database;
     private String fName = new String();
-    private Scanner kb = new Scanner(System.in);
+    java.util.Scanner kb = new java.util.Scanner(System.in);
 
     Database() {
     }
 
     private void add(DbObject d) throws IOException {
-        long posicionGuardar = getPosicion(d);
-//        moverDespuesDe(posicionGuardar, d);
-        System.out.println("pos " + (posicionGuardar / d.size()));
-//        database = new RandomAccessFile(fName, "rw");
-//        database.seek(database.length());
-//        d.writeToFile(database);
-//        database.close();
-    }
-
-    private long getPosicion(DbObject d) throws FileNotFoundException, IOException {
-        long pos = 0;
-        DbObject[] tmp = new DbObject[1];
-        d.copy(tmp);
         database = new RandomAccessFile(fName, "rw");
-        while (database.getFilePointer() < database.length()) {
-            tmp[0].readFromFile(database);
-            if (d.compareTo(tmp[0]) < 0) {
-                database.close();
-                return pos;
-            } else {
-                pos = database.getFilePointer();
-            }
-        }
-
-        pos = database.length();
+        database.seek(database.length());
+        d.writeToFile(database);
         database.close();
-        return pos;
-
-    }
-
-    private void moverDespuesDe(long pos, DbObject d) throws FileNotFoundException, IOException {
-        database = new RandomAccessFile(fName, "rw");
-
-        if (pos == (database.length())) {
-            System.out.println("tet");
-            return;
-        }
-
-        long posEscribirNuevo = database.length() - d.size();
-        DbObject[] tmp = new DbObject[1];
-        d.copy(tmp);
-        while (posEscribirNuevo > pos) {
-            System.out.println("copu");
-            database.seek(posEscribirNuevo);
-            tmp[0].readFromFile(database);
-//            tmp[0].writeLegibly();
-            tmp[0].writeToFile(database);
-            posEscribirNuevo = database.getFilePointer() - 3 * (d.size());
-        }
-
-        tmp[0].readFromFile(database);
-        tmp[0].writeToFile(database);
-
-        database.close();
-
     }
 
     private void modify(DbObject d) throws IOException {
@@ -96,7 +33,7 @@ public class Database {
             }
         }
         database.close();
-        System.out.println("El registro que se va a modificiar no esta en la base de datos");
+        System.out.println("The record to be modified is not in the database");
     }
 
     private boolean find(DbObject d) throws IOException {
@@ -110,15 +47,13 @@ public class Database {
                 return true;
             }
         }
-
         database.close();
         return false;
     }
 
-    private void printDB(DbObject d) throws IOException {
+    private void printDb(DbObject d) throws IOException {
         database = new RandomAccessFile(fName, "r");
         while (database.getFilePointer() < database.length()) {
-            System.out.print("pos: "+(database.getFilePointer()/d.size()));
             d.readFromFile(database);
             d.writeLegibly();
             System.out.println();
@@ -130,8 +65,8 @@ public class Database {
         String option;
         System.out.print("File name: ");
         fName = kb.next();
-        System.out.println("1. Añadir. 2 buscar. 3 modificar un registro. 4 salir");
-        System.out.println("Introduzca una opcion");
+        System.out.println("1. Add 2. Find 3. Modify a record; 4. Exit");
+        System.out.print("Enter an option: ");
         option = kb.next();
         while (true) {
             if (option.charAt(0) == '1') {
@@ -139,24 +74,28 @@ public class Database {
                 add(rec);
             } else if (option.charAt(0) == '2') {
                 rec.readKey();
-                System.out.println("El registro es: ");
+                System.out.print("The record is ");
                 if (find(rec) == false) {
-                    System.out.println("no ");
+                    System.out.print("not ");
                 }
-                System.out.println("En la base de datos");
+                System.out.println("in the database");
             } else if (option.charAt(0) == '3') {
                 rec.readKey();
                 modify(rec);
             } else if (option.charAt(0) != '4') {
-                System.out.println("Opcion incorrecta");
+                System.out.println("Wrong option");
             } else {
                 return;
             }
-
-            printDB(rec);
-            System.out.println("Introducza una opcion");
+            printDb(rec);
+            System.out.println("1. Add 2. Find 3. Modify a record; 4. Exit");
+            System.out.print("Enter an option: ");
             option = kb.next();
         }
     }
 
+    static public void main(String[] a) throws IOException {
+//      (new Database()).run(new Personal());
+        (new Database()).run(new Student());
+    }
 }
